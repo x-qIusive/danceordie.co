@@ -17,11 +17,57 @@
       main { position: fixed; inset: 0; isolation: isolate; background: #000; }
       canvas { position: absolute; inset: 0; width: 100%; height: 100%; }
       footer { position: absolute; z-index: 2; bottom: max(24px, env(safe-area-inset-bottom)); left: 50%; width: 100%; transform: translateX(-50%); padding: 0 20px; color: #fff; font: 500 10px/1.5 Arial, Helvetica, sans-serif; letter-spacing: .18em; text-align: center; user-select: none; }
+      .social-links {
+        position: absolute;
+        z-index: 3;
+        top: max(28px, env(safe-area-inset-top));
+        right: max(30px, env(safe-area-inset-right));
+        display: flex;
+        align-items: center;
+        gap: 17px;
+      }
+      .social-links a {
+        display: grid;
+        width: 30px;
+        height: 30px;
+        place-items: center;
+        color: #fff;
+        opacity: .82;
+        transition: opacity 160ms ease, transform 160ms ease;
+        -webkit-tap-highlight-color: transparent;
+      }
+      .social-links a:hover,
+      .social-links a:focus-visible {
+        opacity: 1;
+        transform: translateY(-1px);
+      }
+      .social-links a:focus-visible { outline: 1px solid #fff; outline-offset: 5px; }
+      .social-links img { display: block; width: auto; height: auto; object-fit: contain; }
+      .social-links .instagram { width: 22px; height: 22px; }
+      .social-links .youtube { width: 28px; max-height: 24px; }
+      @media (max-width: 600px) {
+        .social-links {
+          top: max(18px, env(safe-area-inset-top));
+          right: max(18px, env(safe-area-inset-right));
+          gap: 12px;
+        }
+        .social-links a { width: 28px; height: 28px; }
+        .social-links .instagram { width: 20px; height: 20px; }
+        .social-links .youtube { width: 26px; max-height: 22px; }
+      }
     </style>
   </head>
   <body>
     <main>
       <canvas id="visual" aria-hidden="true"></canvas>
+      <nav class="social-links" aria-label="Social media">
+        <a href="https://www.instagram.com/danceord.ie" target="_blank" rel="noopener noreferrer" aria-label="DANCE OR DIE on Instagram">
+          <img class="instagram" src="data:image/png;base64,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" alt="" />
+        </a>
+        <a href="https://www.youtube.com/@danceordi.e" target="_blank" rel="noopener noreferrer" aria-label="DANCE OR DIE on YouTube">
+          <img class="youtube" src="data:image/png;base64,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" alt="" />
+        </a>
+      </nav>
       <footer>©2026 DANCE OR DIE. All Rights Reserved.</footer>
     </main>
     <script>
@@ -186,3 +232,4 @@
     </script>
   </body>
 </html>
+
